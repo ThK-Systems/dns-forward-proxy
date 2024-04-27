@@ -1,0 +1,10 @@
+{
+    "logfile": "./dns-forward-proxy.log",
+    "listen": {
+        "address": "127.0.0.1", "port": "15353"
+    },
+    "forwarders": [
+        { "name": "Quad9", "address": "9.9.9.10", "port": "53", "timeout": "2" },
+        { "name": "Google", "address": "8.8.8.8", "port": "53", "timeout": "2" }
+    ]
+}
