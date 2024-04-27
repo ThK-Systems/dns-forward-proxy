@@ -31,11 +31,13 @@ class UDPRequestHandler(BaseRequestHandler):
 
 
 def forward_request(request_data):
+    # TODO: Add circuit breaker
     for forwarder in configuration["forwarders"]:
         try:
             with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as dns_socket:
                 dns_socket.settimeout(int(forwarder.get("timeout", DEFAULT_TIMEOUT)))
                 dns_socket.sendto(request_data, (forwarder["address"], int(forwarder.get("port", "53"))))
+                # FIXME: No response every n request
                 response_data, _ = dns_socket.recvfrom(1024)
             return response_data
         except socket.timeout:
